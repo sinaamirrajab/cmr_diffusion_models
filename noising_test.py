@@ -2,23 +2,21 @@
 import torch
 from torchvision.utils import save_image
 from cmr_ddpm import Diffusion
-from utils import get_data, CMRDataModule
+from modules.dataloader import *
+from modules.utils import *
+import argparse
+import sys
+sys.argv=['']
+del sys
 import argparse
 from matplotlib import pyplot as plt
-# parser = argparse.ArgumentParser()
-# args = parser.parse_args()
-# args.batch_size = 1  # 5
-# args.image_size = 64
-# args.dataset_path = r"C:\Users\dome\datasets\landscape_img_folder"
 
-# dataloader = get_data(args)
-
-data_dir = '/home/bme001/20180883/data/mnms2/sorted/SA/PerDisease'
-data = CMRDataModule(
+data_dir = '/home/bme001/20180883/data/MMs2/dataset_3D_crop'
+data = CMRCineDataModule(
     data_dir=data_dir,
     batch_size=1,
     train_val_ratio=0.8,
-    image_size=256,
+    image_size=128,
     num_workers=1
 )
 data.prepare_data()

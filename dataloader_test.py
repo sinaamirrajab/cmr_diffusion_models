@@ -1,20 +1,22 @@
 # %%
-from utils import *
+from modules.dataloader import *
+from modules.utils import *
 import argparse
 import sys
 sys.argv=['']
 del sys
 
 # set some options
+# '/home/bme001/20180883/data/mnms2/sorted/SA/PerDisease'
 default_config = {
-    'dataset_path':  '/home/bme001/20180883/data/mnms2/sorted/SA/PerDisease',
-    'run_name': "cmr_DDPM_Uncondtional_230128",
+    'dataset_path': '/home/bme001/20180883/data/MMs2/dataset_3D_crop',
+    'run_name': "cmr_DDPM_230323",
     'epochs': 50,
     'log_interval': 100,
     'batch_size' : 8,
-    'image_size' : 256,
+    'image_size' : 128,
     'num_workers' : 8,
-    'device' : "cuda:4",
+    'device' : "cpu",
     'lr' : 3e-4,
     'noise_steps' : 500,
     'beta_start':1e-4,
@@ -25,9 +27,9 @@ parser = argparse.ArgumentParser()
 for keys in default_config:
     parser.add_argument('--'+keys, default=default_config[keys], type= type(default_config[keys]))
 args = parser.parse_args()
-
-
-data = CMRDataModule(
+# CMR2DDataModule
+# CMRCineDataModule
+data = CMRCineDataModule(
         data_dir=args.dataset_path,
         image_size=args.image_size,
         batch_size=args.batch_size,
@@ -42,8 +44,9 @@ print('number of images is {}'.format(len(dataloader)))
 # %%
 # visualize a batch of images
 plot_batch(dataloader)
-
-
+# cine_to_3D(args.dataset_path)
+# crop_data = bbox(str(args.dataset_path.replace('_3D', '')))
+# crop_data.crop_image()
 # %%
 # test the training loop
 from tqdm import tqdm
@@ -58,4 +61,3 @@ for epoch in range(args.epochs):
             print(images.shape)
             if len(images.shape)<4:
                 print(images)
-# %%

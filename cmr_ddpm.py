@@ -4,8 +4,8 @@ import torch.nn as nn
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 from torch import optim
-from utils import *
-from modules import UNet, UNet128
+from modules.utils import *
+from modules.modules import UNet, UNet128
 import logging
 import argparse
 import wandb
